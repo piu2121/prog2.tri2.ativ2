@@ -1,4 +1,5 @@
 // Select DOM elements
+const p = 5003;
 const app = document.querySelector('#app')
 const input = app.querySelector('#task-input')
 const addButton = app.querySelector('#add-button')
@@ -6,44 +7,27 @@ const list = app.querySelector('#list')
 const itemTemplate = list.querySelector('template')
 
 // Save tasks to local storage
-function saveToLocalStorage() {
-  const tasks = []
 
-  list.querySelectorAll('li').forEach(li => {
-    const title = li.querySelector('.title').textContent
-    tasks.push(title)
-  })
+let tasks;
 
-  localStorage.setItem('tasks', JSON.stringify(tasks))
-}
-
-// Load tasks from local storage and add them to the list
-function loadFromLocalStorage() {
-  const tasks = JSON.parse(
-    localStorage.getItem('tasks') || '[]'
-  )
-
-  tasks.forEach(title => {
-    const task = createDomTask(title)
-    list.appendChild(task)
-  })
-}
 
 // Create a DOM element for a task
-function createDomTask(title) {
-  const task = itemTemplate.content.cloneNode(true)
+function createDomTask(tasks) {
+  const domTask = itemTemplate.content.cloneNode(true)
 
-  task.querySelector('.title').textContent = title
+  domTask.querySelector('.title').textContent = tasks.title
 
-  task.querySelector('.bt-delete')
+  domTask.querySelector('.bt-delete')
     .addEventListener('click', (e) => {
 
       e.target.closest('li').remove()
 
-      saveToLocalStorage()
-    })
 
-  return task
+    })
+    domTask.querySelector('.bt-delete').onclick = () => deletetask(${tasks.id})
+    domTask.querySelector('.bt-delete').addEventListener('click', () => deletetask(${tasks.id}))
+
+  return domTask
 }
 
 // Create a new task and add it to the list
@@ -52,13 +36,8 @@ function createNewTask() {
 
   if (!title) return
 
-  const task = createDomTask(title)
-
-  list.appendChild(task)
-
+  const task = posttask(title)
   input.value = ''
-
-  saveToLocalStorage()
 }
 
 // Event listeners
@@ -68,10 +47,51 @@ addButton.addEventListener(
 )
 
 input.addEventListener('keypress', (e) =>
-  (e.key === 'Enter'
-    ? createNewTask()
-    : null)
+(e.key === 'Enter'
+  ? createNewTask()
+  : null)
 )
 
 // Load tasks from local storage on page load
-loadFromLocalStorage()
+
+const gettask = async () => {
+  await fetch('http://localhost:${p}/listabolada/get', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+tasks = await response.json()
+};
+const updatetask = async (id) => {
+  await fetch('http://localhost:${p}/listabolada/update?id=${id}', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  gettask()
+};
+const deletetask = async (id) => {
+  await fetch('http://localhost:${p}/listabolada/delete?id=${id}', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  gettask()
+};
+
+const posttask = async (title) => {
+  await fetch('http://localhost:${p}/listabolada/post', {
+    method: 'POST',
+    headers: { contentType: 'application/json' },
+    body: JSON.stringify({
+      title: title
+
+    })
+  })
+  gettask()
+}
+
+gettask()

@@ -1,11 +1,5 @@
 import { Database } from "bun:sqlite";
 
-// class Item_ {
-//   public title: string
-//   constructor(title: string) {
-//     this.title = title
-//   }
-// }
 
 const db = new Database("database.sqlite")
 
@@ -37,7 +31,7 @@ db.run(`
 const querySelectItems = db.prepare("SELECT * FROM items")
 const queryInsertItem = db.prepare("INSERT INTO items (title) VALUES (?)")
 const removeItems = (id: number) => { db.run("Delete from items where id=?1", [id]) }
-const updateItems = (id: number, newtitle: String) => { db.run("Update items Set title=?2  where id=?1", [id,newtitle]) }
+const updateItems = (id: number, newtitle: String) => { db.run("Update items Set title=?2  where id=?1", [id, newtitle]) }
 class Item {
   constructor(public title: string) { }
 }
@@ -67,16 +61,16 @@ class TodoList {
   }
 }
 
+let lista = new TodoList()
 
-function bola() {
-  let lista = new TodoList()
-  const bola = new Item("bola")
-  lista.addItem(bola)
-  let meuitem  = lista.getItems()
-  console.log(meuitem[0].title, "    ", meuitem[0].id)
-  console.log(lista.updateItems(1, 'bolaaaaaaaaaaaaaaa'))
-  lista.removeItem(1)
-
+const bdAction = {
+  update(id: number, newtitle: string) { lista.updateItems(id, newtitle) },
+  delete(id: number) { lista.removeItem(id) },
+  pegar() {
+    let meuitem = lista.getItems()
+    return meuitem;
+  },
+  inserir(nome:string) { lista.addItem(new Item(nome)) }
 }
 
-bola()
+export { bdAction }
