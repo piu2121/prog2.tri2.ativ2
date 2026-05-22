@@ -57,6 +57,7 @@ class TodoList {
   }
 
   updateItems(index: number, newtitle: string) {
+    updateItems(index, newtitle)
     return "sdlkjfdskljfghsadlkfjhsdaflkjh"
   }
 
