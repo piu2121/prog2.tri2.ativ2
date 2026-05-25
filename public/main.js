@@ -9,12 +9,10 @@ const itemTemplate = list.querySelector('template')
 // Save tasks to local storage
 
 let tasks;
-
-
 // Create a DOM element for a task
-function createDomTask(tasks) {
+function createDomTask() {
   const domTask = itemTemplate.content.cloneNode(true)
-
+  foreach(tasks, (tasks) => {
   domTask.querySelector('.title').textContent = tasks.title
 
   domTask.querySelector('.bt-delete')
@@ -23,10 +21,11 @@ function createDomTask(tasks) {
       e.target.closest('li').remove()
 
 
-    })
-    domTask.querySelector('.bt-delete').onclick = () => deletetask(${tasks.id})
+    })/* aqui eu insiro  a função como um meta dado do butão
+    domTask.querySelector('.bt-delete').onclick = () => deletetask(${tasks.id})*/
     domTask.querySelector('.bt-delete').addEventListener('click', () => deletetask(${tasks.id}))
-
+    domTask.querySelector('.bt-update').addEventListener('click', () => updatetask(${tasks.id}))
+  })
   return domTask
 }
 
@@ -64,16 +63,18 @@ const gettask = async () => {
 tasks = await response.json()
 };
 const updatetask = async (id) => {
-  await fetch('http://localhost:${p}/listabolada/update?id=${id}', {
-    method: 'PUT',
+  await fetch('http://localhost:${p}/listabolada/update:${id}', {
+    method: 'patch',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },body: JSON.stringify({
+      title: input.value.trim()
+    })
   })
   gettask()
 };
 const deletetask = async (id) => {
-  await fetch('http://localhost:${p}/listabolada/delete?id=${id}', {
+  await fetch('http://localhost:${p}/listabolada/delete:${id}', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

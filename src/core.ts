@@ -70,7 +70,7 @@ const bdAction = {
     let meuitem = lista.getItems()
     return meuitem;
   },
-  inserir(nome:string) { lista.addItem(new Item(nome)) }
+  inserir(nome: string) { lista.addItem(new Item(nome)) }
 }
 
 export { bdAction }

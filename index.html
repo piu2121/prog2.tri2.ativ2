@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang='pt-BR'>
+
 <head>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>To-Do List</title>
-  <link rel='stylesheet' href='main.css'>
-  <script type="module" src="./main.js"></script>
+  <link rel='stylesheet' href='http://localhost:5003/public/main.css'>
+  <script type="module" src="http://localhost:5003/public/main.js"></script>
 </head>
+
 <body>
   <main id="app">
     <div id="input-container">
@@ -17,10 +19,12 @@
       <template>
         <li>
           <span class="title">title</span>
-          <button class="bt-delete" onclick="deletetask()">Delete</button>
+          <button class="bt-delete">Delete</button>
+          <button class="bt-update">Update</button>
         </li>
       </template>
     </ul>
   </main>
 </body>
+
 </html>
