@@ -31,7 +31,7 @@ db.run(`
 const querySelectItems = db.prepare("SELECT * FROM items")
 const queryInsertItem = db.prepare("INSERT INTO items (title) VALUES (?)")
 const removeItems = (id: number) => { db.run("Delete from items where id=?1", [id]) }
-const updateItems = (id: number, newtitle: String) => { db.run("Update items Set title=?2  where id=?1", [id, newtitle]) }
+const updateItems = (id: number, newtitle: string) => { db.run("Update items Set title=?2  where id=?1", [id, newtitle]) }
 class Item {
   constructor(public title: string) { }
 }
@@ -52,7 +52,7 @@ class TodoList {
 
   updateItems(index: number, newtitle: string) {
     updateItems(index, newtitle)
-    return "sdlkjfdskljfghsadlkfjhsdaflkjh"
+    
   }
 
   getItems() {
@@ -64,13 +64,22 @@ class TodoList {
 let lista = new TodoList()
 
 const bdAction = {
-  update(id: number, newtitle: string) { lista.updateItems(id, newtitle) },
-  delete(id: number) { lista.removeItem(id) },
+  update(id:string, newtitle: string) { 
+    lista.updateItems(parseInt(id), newtitle) 
+  },
+  
+  delete(id:string) { 
+    lista.removeItem(parseInt(id)) 
+  },
+  
   pegar() {
     let meuitem = lista.getItems()
     return meuitem;
   },
-  inserir(nome: string) { lista.addItem(new Item(nome)) }
+
+  inserir(nome: string) { 
+    lista.addItem(new Item(nome)) 
+  }
 }
 
 export { bdAction }

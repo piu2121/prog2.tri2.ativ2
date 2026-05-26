@@ -54,7 +54,7 @@ input.addEventListener('keypress', (e) =>
 // Load tasks from local storage on page load
 
 const gettask = async () => {
-  await fetch('http://localhost:${p}/listabolada/get', {
+  await fetch('https://turbo-doodle-wr9qw5vp746phg7gx-3000.app.github.dev/listabolada/get', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ const gettask = async () => {
 tasks = await response.json()
 };
 const updatetask = async (id) => {
-  await fetch('http://localhost:${p}/listabolada/update:${id}', {
+  await fetch('https://turbo-doodle-wr9qw5vp746phg7gx-3000.app.github.dev/listabolada/update/id:${id}', {
     method: 'patch',
     headers: {
       'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ const updatetask = async (id) => {
   gettask()
 };
 const deletetask = async (id) => {
-  await fetch('http://localhost:${p}/listabolada/delete:${id}', {
+  await fetch('https://turbo-doodle-wr9qw5vp746phg7gx-3000.app.github.dev/listabolada/delete/id:${id}', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ const deletetask = async (id) => {
 };
 
 const posttask = async (title) => {
-  await fetch('http://localhost:${p}/listabolada/post', {
+  const response = await fetch('https://turbo-doodle-wr9qw5vp746phg7gx-3000.app.github.dev/listabolada/post', {
     method: 'POST',
     headers: { contentType: 'application/json' },
     body: JSON.stringify({
@@ -93,6 +93,7 @@ const posttask = async (title) => {
     })
   })
   gettask()
+  return await response.json()
 }
 
 gettask()
