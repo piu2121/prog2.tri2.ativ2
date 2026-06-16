@@ -39,7 +39,15 @@ const { hostname, port } = Bun.serve({
         },
         "/item/:id": {
             GET: (req) => {
-                const item = Item.load(req.params.id)
+                if(isnotNumber(req.params.id){
+                return Response.json('envie um numúero inteiro)    
+                }else{
+                    try(e){
+                const item = Item.load(req.params.id)}
+                    }catch(e){
+                return Response.json('passe um id válido,um id de um item existente)    
+                    
+                }
                 return Response.json(item)
             }
         }
