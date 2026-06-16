@@ -39,8 +39,9 @@ const { hostname, port } = Bun.serve({
         },
         "/item/:id": {
             GET: (req) => {
-                if(isnotNumber(req.params.id){
-                return Response.json('envie um numúero inteiro)    
+                const id =parseInt(req.params.id)
+                if(isNaN(id){
+                return Response.json('envie um número inteiro)    
                 }else{
                     try(e){
                 const item = Item.load(req.params.id)}
